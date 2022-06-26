@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../pages/home/index';
@@ -20,6 +20,8 @@ import Profile from '../pages/profile/Profile';
 import Color from '../constants/Color';
 import Notification from '../pages/notification/Notification';
 import MyOrders from '../pages/my_orders/MyOrders';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SplashScreen from 'react-native-splash-screen';
 const Tab = createBottomTabNavigator();
 
 const HomeStack = createNativeStackNavigator();
@@ -31,6 +33,25 @@ const MainStack = createNativeStackNavigator();
 
 export default Navigation = () => {
   const isAuth = useSelector(state => !!state.auth.userId);
+  const dispatch = useDispatch();
+
+  const tryLogin = async () => {
+    const userData = await AsyncStorage.getItem('userData');
+    console.log('useData', userData);
+    if (!userData) {
+      SplashScreen.hide();
+      // props.navigation.navigate('SignUp');
+      return;
+    }
+    const transformedData = JSON.parse(userData);
+    const {token, userId} = transformedData;
+    dispatch(authActions.authenticate(userId, token));
+    SplashScreen.hide();
+  };
+
+  useEffect(() => {
+    tryLogin();
+  }, []);
 
   function authScreenNav() {
     return (
@@ -41,13 +62,13 @@ export default Navigation = () => {
           },
           headerTintColor: '#fff',
         }}>
-        <AuthStack.Screen
+        {/* <AuthStack.Screen
           name="StartUp"
           component={StartUp}
           options={{
             headerShown: false,
           }}
-        />
+        /> */}
         <AuthStack.Screen
           name="SignUp"
           component={Auth}

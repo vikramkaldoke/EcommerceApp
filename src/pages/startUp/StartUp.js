@@ -13,7 +13,7 @@ const StartUp = props => {
       const userData = await AsyncStorage.getItem('userData');
       console.log('useData', userData);
       if (!userData) {
-        props.navigation.navigate('SignUp');
+        props.navigation.replace('SignUp');
         return;
       }
       const transformedData = JSON.parse(userData);

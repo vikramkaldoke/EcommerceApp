@@ -55,7 +55,7 @@ export const Auth = ({navigation}) => {
     try {
       await dispatch(action);
       // setIsLoading(false);
-      navigation.navigate('homePage');
+      // navigation.navigate('homePage');
     } catch (error) {
       //TO Do need to handle error codes.
       console.log('error', error);
@@ -82,7 +82,7 @@ export const Auth = ({navigation}) => {
                 containerStyle={styles.viewMarginTop}
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
-                value={values.email}
+                value={values.email.toLocaleLowerCase()}
                 error={errors.email}
               />
               <CustomInput

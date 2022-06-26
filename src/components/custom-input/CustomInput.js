@@ -39,16 +39,16 @@ const CustomInput = props => {
 
 CustomInput.propTypes = {
   title: PropTypes.string.isRequired,
-  error: PropTypes.any,
+  // error: PropTypes.any,
   placeHolder: PropTypes.string.isRequired,
-  containerStyle: ViewPropTypes.style,
+  // containerStyle: PropTypes.any,
   onIconPress: PropTypes.func,
 };
 
 CustomInput.propTypes = {
-  error: null,
-  containerStyle: null,
-  onIconPress: null,
+  // error: null,
+  // containerStyle: null,
+  onIconPress: () => {},
 };
 
 export default CustomInput;
